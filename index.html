@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Bhai</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: glow 2s infinite alternate;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    .btn {
+      margin-top: 30px;
+      padding: 12px 25px;
+      border: none;
+      background: #ff4b2b;
+      color: white;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #ff416c;
+      transform: scale(1.05);
+    }
+
+    .hidden {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.3rem;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff4b2b; }
+      to { text-shadow: 0 0 25px #ff416c; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="confetti"></canvas>
+
+  <div class="container">
+    <h1>Happy Birthday Bhai 🎉</h1>
+    <p>
+      You’re not just my brother, you’re my built-in best friend, my support system,
+      and sometimes my biggest headache 😭.
+      But honestly, life wouldn’t be the same without you.
+    </p>
+
+    <button class="btn" onclick="showMessage()">Click for Surprise</button>
+
+    <div id="message" class="hidden">
+      Thank you for always having my back. Hope you achieve everything you dream of.
+      Love you bhai ❤️
+    </div>
+  </div>
+
+  <script>
+    function showMessage() {
+      document.getElementById('message').style.display = 'block';
+      startConfetti();
+    }
+
+    // Simple Confetti
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    function createParticles() {
+      for (let i = 0; i < 100; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 5 + 2,
+          speedY: Math.random() * 3 + 1
+        });
+      }
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'white';
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function updateParticles() {
+      particles.forEach(p => {
+        p.y += p.speedY;
+        if (p.y > canvas.height) p.y = 0;
+      });
+    }
+
+    function animate() {
+      drawParticles();
+      updateParticles();
+      requestAnimationFrame(animate);
+    }
+
+    function startConfetti() {
+      createParticles();
+      animate();
+    }
+  </script>
+
+</body>
+</html>
